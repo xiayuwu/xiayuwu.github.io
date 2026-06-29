@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f0e8">
+    {% seo %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    {% feed_meta %}
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header shell">
+      <a class="brand" href="{{ '/' | relative_url }}" aria-label="夏雨屋首页">
+        <span class="brand-mark">雨</span>
+        <span>夏雨屋</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="{{ '/' | relative_url }}">文章</a>
+        <a href="{{ '/archive/' | relative_url }}">归档</a>
+        <a href="{{ '/about/' | relative_url }}">关于</a>
+        <button class="theme-toggle" type="button" aria-label="切换深浅色" title="切换深浅色">◐</button>
+      </nav>
+    </header>
+    <main>{{ content }}</main>
+    <footer class="site-footer shell">
+      <p>在字里行间，给时间留一扇窗。</p>
+      <div><span>© {{ 'now' | date: '%Y' }} 夏雨屋</span><a href="https://github.com/xiayuwu">GitHub</a><a href="{{ '/feed.xml' | relative_url }}">RSS</a></div>
+    </footer>
+    <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+  </body>
+</html>
+

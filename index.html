@@ -1,0 +1,38 @@
+---
+layout: default
+title: 夏雨屋
+---
+<section class="hero shell">
+  <div class="hero-copy">
+    <p class="eyebrow">XIAYUWU · NOTES & STORIES</p>
+    <h1>把复杂的世界，<br><em>写得清澈一点。</em></h1>
+    <p class="hero-intro">这里收集技术实践、生活观察，以及所有不该被时间冲走的念头。</p>
+    <a class="hero-link" href="#latest">读最新文章 <span>↘</span></a>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="sun"></div><div class="rain rain-a"></div><div class="rain rain-b"></div>
+    <span class="vertical">夏日有雨<br>字里有光</span>
+  </div>
+</section>
+
+<section class="latest shell" id="latest">
+  <header class="section-head">
+    <div><p class="eyebrow">LATEST WRITING</p><h2>近期文章</h2></div>
+    <p>{{ site.posts | size }} 篇记录，仍在生长。</p>
+  </header>
+  <div class="post-grid">
+    {% for post in site.posts %}
+    <article class="post-card{% if forloop.first %} featured{% endif %}">
+      <a href="{{ post.url | relative_url }}" aria-label="阅读《{{ post.title }}》"></a>
+      <div class="card-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+      <div class="card-body">
+        <p class="card-meta">{{ post.date | date: '%Y.%m.%d' }}{% if post.categories %} · {{ post.categories | first }}{% endif %}</p>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.description | default: post.excerpt | strip_html | truncate: 110 }}</p>
+      </div>
+      <span class="card-arrow">↗</span>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
