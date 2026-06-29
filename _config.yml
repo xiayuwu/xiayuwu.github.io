@@ -1,11 +1,11 @@
-title: 夏雨屋
-description: 记录技术、生活与那些值得留下的片刻
+title: xiayu-house
+description: glassmorphism personal blog with writing photos notes and memoir.
 url: https://xiayuwu.github.io
 baseurl: ""
 lang: zh-CN
 timezone: Asia/Shanghai
 author:
-  name: 夏鱼
+  name: Xiayu
   github: xiayuwu
 permalink: /posts/:title/
 paginate: 10

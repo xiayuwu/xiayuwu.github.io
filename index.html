@@ -1,38 +1,218 @@
 ---
 layout: default
-title: 夏雨屋
+title: home
 ---
-<section class="hero shell">
-  <div class="hero-copy">
-    <p class="eyebrow">XIAYUWU · NOTES & STORIES</p>
-    <h1>把复杂的世界，<br><em>写得清澈一点。</em></h1>
-    <p class="hero-intro">这里收集技术实践、生活观察，以及所有不该被时间冲走的念头。</p>
-    <a class="hero-link" href="#latest">读最新文章 <span>↘</span></a>
-  </div>
-  <div class="hero-art" aria-hidden="true">
-    <div class="sun"></div><div class="rain rain-a"></div><div class="rain rain-b"></div>
-    <span class="vertical">夏日有雨<br>字里有光</span>
+{% assign hidden_titles = "世界，您好！|思考|敬卡文迪什" | split: "|" %}
+{% assign visible_total = site.posts.size %}
+{% assign gallery_images = "/assets/images/imported/170-edf244a446f0ed5d880fed218e956900.png|/assets/images/imported/184-img_0849.png|/assets/images/imported/198-img_1239.jpg|/assets/images/imported/160-vrchat_2026-03-19_23-21-23.500_4320x7680.jpg|/assets/images/imported/179-vrchat_2026-05-10_13-59-43.784_4320x7680.png|/assets/images/imported/189-vrchat_2026-05-17_23-21-03.526_7680x4320.png" | split: "|" %}
+{% assign photo_total = gallery_images | size %}
+
+<section class="home-hero shell" id="home">
+  <div class="hero-grid">
+    <article class="glass-panel identity-card reveal">
+      <div class="identity-head">
+        <div class="avatar-wrap">
+          <img class="avatar-image" src="{{ '/assets/images/custom/xiayu-hero.png' | relative_url }}" alt="夏鱼头像">
+        </div>
+        <div>
+          <p class="overline">XIAYUWU'S DIGITAL SHELTER</p>
+          <h1>夏鱼屋</h1>
+          <p class="identity-intro">一处留给星光、回音与慢慢生长的个人数字小屋。这里收纳文章、照片、碎碎念，也给私密的回忆留一盏灯。</p>
+        </div>
+      </div>
+      <div class="identity-copy">
+        <p>主页视觉与结构由 Codex 完整搭建，保留你自己的文字气味，同时把界面升级成深空毛玻璃的温柔质感。</p>
+        <div class="identity-tags">
+          <span>毛玻璃拟态</span>
+          <span>深空星河</span>
+          <span>二次元幻想</span>
+          <span>轻赛博夜景</span>
+        </div>
+      </div>
+      <div class="identity-stats">
+        <div>
+          <strong>{{ visible_total }}</strong>
+          <span>文章</span>
+        </div>
+        <div>
+          <strong>08</strong>
+          <span>杂谈</span>
+        </div>
+        <div>
+          <strong>{{ photo_total }}</strong>
+          <span>照片</span>
+        </div>
+        <div>
+          <strong>01</strong>
+          <span>回忆录</span>
+        </div>
+      </div>
+    </article>
+
+    <div class="hero-side">
+      <article class="glass-panel hero-summary reveal">
+        <p class="overline">WELCOME</p>
+        <h2>把夜色、心绪与生活碎片，安静地摆进同一个宇宙。</h2>
+        <p>“回忆录”会继续保留，它更像夏鱼屋里上锁但温柔的一间房，适合以后慢慢补上那些只想留给自己或很重要之人的内容。</p>
+        <div class="hero-actions">
+          <a class="primary-link" href="#latest-writing">进入文章流</a>
+          <a class="ghost-link" href="{{ '/archive/' | relative_url }}">翻看归档</a>
+        </div>
+      </article>
+
+      <article class="glass-panel signal-card reveal">
+        <div>
+          <p class="overline">NOW SIGNAL</p>
+          <h3>深空低频 / 慢速呼吸 / 流萤在线</h3>
+        </div>
+        <p>页面背景会轻微流动，导航、卡片与播放器都保持同一套玻璃质感，夜间更沉浸，白天更清透。</p>
+      </article>
+    </div>
   </div>
 </section>
 
-<section class="latest shell" id="latest">
-  <header class="section-head">
-    <div><p class="eyebrow">LATEST WRITING</p><h2>近期文章</h2></div>
-    <p>{{ site.posts | size }} 篇记录，仍在生长。</p>
-  </header>
+<section class="content-section shell" id="latest-writing">
+  <div class="section-heading reveal">
+    <div>
+      <p class="overline">LATEST WRITING</p>
+      <h2>最近写下的内容</h2>
+    </div>
+    <p>删掉空壳占位后，首页只保留真正想留下来的记录。</p>
+  </div>
+
   <div class="post-grid">
+    {% assign shown_posts = 0 %}
     {% for post in site.posts %}
-    <article class="post-card{% if forloop.first %} featured{% endif %}">
-      <a href="{{ post.url | relative_url }}" aria-label="阅读《{{ post.title }}》"></a>
-      <div class="card-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
-      <div class="card-body">
-        <p class="card-meta">{{ post.date | date: '%Y.%m.%d' }}{% if post.categories %} · {{ post.categories | first }}{% endif %}</p>
-        <h3>{{ post.title }}</h3>
-        <p>{{ post.description | default: post.excerpt | strip_html | truncate: 110 }}</p>
-      </div>
-      <span class="card-arrow">↗</span>
-    </article>
+      {% unless hidden_titles contains post.title %}
+        {% assign cover_index = shown_posts | modulo: photo_total %}
+        {% assign fallback_cover = gallery_images[cover_index] %}
+        {% if post.title contains "回忆录" %}
+          {% assign post_label = "回忆录" %}
+        {% elsif post.image %}
+          {% assign post_label = "图像记忆" %}
+        {% else %}
+          {% assign post_label = "心绪记录" %}
+        {% endif %}
+        <article class="glass-panel post-card reveal">
+          <a class="post-link" href="{{ post.url | relative_url }}" aria-label="阅读 {{ post.title }}"></a>
+          <div class="post-cover">
+            <img src="{{ post.image | default: fallback_cover | relative_url }}" alt="{{ post.title }} 封面">
+            <span class="post-badge">{{ post_label }}</span>
+          </div>
+          <div class="post-card-body">
+            <p class="post-meta">
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time>
+              <span>#{{ shown_posts | plus: 1 | prepend: '0' | slice: -2, 2 }}</span>
+            </p>
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.description | default: post.excerpt | strip_html | strip_newlines | default: "写给当时的自己，也写给路过这里的人。" | truncate: 86 }}</p>
+          </div>
+        </article>
+        {% assign shown_posts = shown_posts | plus: 1 %}
+        {% if shown_posts >= 6 %}
+          {% break %}
+        {% endif %}
+      {% endunless %}
     {% endfor %}
   </div>
 </section>
 
+<section class="feature-cluster shell" id="photos">
+  <div class="cluster-grid">
+    <article class="glass-panel memory-card reveal" id="talks">
+      <p class="overline">PRIVATE CHAPTER</p>
+      <h2>回忆录</h2>
+      <p>这不是空栏目，而是夏鱼屋里专门留给私密内容的一角。它会慢一点更新，但会比别处更真。</p>
+      <a class="ghost-link" href="{% for post in site.posts %}{% if post.title contains '回忆录' %}{{ post.url | relative_url }}{% break %}{% endif %}{% endfor %}">进入回忆录</a>
+    </article>
+
+    <article class="glass-panel mini-feed reveal" id="essays">
+      <p class="overline">SHORT NOTES</p>
+      <h2>杂谈与碎碎念</h2>
+      <ul>
+        {% assign notes_count = 0 %}
+        {% for post in site.posts %}
+          {% unless hidden_titles contains post.title %}
+            {% unless post.title contains "回忆录" %}
+              <li>
+                <span>{{ post.date | date: '%m.%d' }}</span>
+                <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+              </li>
+              {% assign notes_count = notes_count | plus: 1 %}
+              {% if notes_count >= 4 %}
+                {% break %}
+              {% endif %}
+            {% endunless %}
+          {% endunless %}
+        {% endfor %}
+      </ul>
+    </article>
+  </div>
+
+  <article class="glass-panel gallery-card reveal">
+    <div class="section-heading compact">
+      <div>
+        <p class="overline">PHOTO WALL</p>
+        <h2>照片墙</h2>
+      </div>
+      <p>夜海、樱光、街景与一些只属于你的发光切片。</p>
+    </div>
+    <div class="gallery-grid">
+      {% for image in gallery_images %}
+        <figure class="gallery-item{% if forloop.first %} large{% endif %}">
+          <img src="{{ image | relative_url }}" alt="夏鱼屋照片 {{ forloop.index }}">
+        </figure>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+<section class="content-section shell" id="links">
+  <div class="section-heading reveal">
+    <div>
+      <p class="overline">LINKS & ABOUT</p>
+      <h2>友链、关于与屋内说明</h2>
+    </div>
+    <p>先把空间搭好，之后再慢慢放进更多人和更多故事。</p>
+  </div>
+
+  <div class="info-grid">
+    <article class="glass-panel reveal">
+      <p class="overline">FRIEND LINKS</p>
+      <h3>友链位预留中</h3>
+      <p>这里暂时留白，等以后遇到想认真交换的站点，再把名字与光一起挂上来。</p>
+      <div class="chip-row">
+        <a href="https://github.com/{{ site.author.github }}">GitHub</a>
+        <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+      </div>
+    </article>
+
+    <article class="glass-panel reveal" id="about">
+      <p class="overline">ABOUT XIAYUWU</p>
+      <h3>关于这间小屋</h3>
+      <p>夏鱼屋不是追热点的内容流，而是一处带着情绪温度的个人主页。文章、音乐、照片和回忆录会共同构成你的长期数字栖居地。</p>
+      <a class="ghost-link" href="{{ '/about/' | relative_url }}">阅读完整关于</a>
+    </article>
+  </div>
+</section>
+
+<aside class="music-player glass-panel" id="music" data-player data-duration="188" data-audio-src="">
+  <div class="player-cover">
+    <img src="{{ '/assets/images/custom/xiayu-hero.png' | relative_url }}" alt="播放器封面">
+  </div>
+  <div class="player-body">
+    <p class="overline">IMMERSIVE PLAYER</p>
+    <h3>Midnight Firefly</h3>
+    <p>合成氛围音，可随时替换成你自己的 BGM。</p>
+    <div class="player-progress">
+      <span class="player-progress-bar" data-progress></span>
+    </div>
+    <div class="player-meta">
+      <span data-current>00:00</span>
+      <span data-duration-label>03:08</span>
+    </div>
+  </div>
+  <button class="player-toggle" type="button" aria-label="播放或暂停背景音乐" data-player-toggle>
+    <span data-toggle-icon>▶</span>
+  </button>
+</aside>
