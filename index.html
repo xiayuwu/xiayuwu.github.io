@@ -3,62 +3,65 @@ layout: default
 title: 夏鱼屋
 ---
 {% assign hidden_titles = "世界，您好！|思考|敬卡文迪什" | split: "|" %}
-{% assign gallery_images = "/assets/images/imported/170-edf244a446f0ed5d880fed218e956900.png|/assets/images/imported/184-img_0849.png|/assets/images/imported/160-vrchat_2026-03-19_23-21-23.500_4320x7680.jpg|/assets/images/imported/179-vrchat_2026-05-10_13-59-43.784_4320x7680.png|/assets/images/imported/189-vrchat_2026-05-17_23-21-03.526_7680x4320.png" | split: "|" %}
+{% assign gallery_images = "/assets/images/imported/170-edf244a446f0ed5d880fed218e956900.png|/assets/images/imported/184-img_0849.png|/assets/images/imported/198-img_1239.jpg|/assets/images/imported/160-vrchat_2026-03-19_23-21-23.500_4320x7680.jpg|/assets/images/imported/179-vrchat_2026-05-10_13-59-43.784_4320x7680.png" | split: "|" %}
 
-<div class="cinema-home" data-cinema-home>
-  <section class="cinema-act opening-act" id="home" data-cinema-act>
-    <div class="opening-image" aria-hidden="true"></div>
-    <div class="opening-shade" aria-hidden="true"></div>
-    <div class="opening-orbit orbit-a" aria-hidden="true"></div>
-    <div class="opening-orbit orbit-b" aria-hidden="true"></div>
+<div class="anime-home">
+  <section class="anime-hero" id="home">
+    <div class="hero-sky-copy reveal">
+      <p class="anime-kicker"><span></span> XIAYU'S FANTASY LOG</p>
+      <h1><em>夏鱼</em>的<br>星光小屋</h1>
+      <p class="anime-hero-lead">在蓝色夜空与粉色云霞交界的地方，收藏文字、照片、音乐，还有那些只想悄悄留下的回忆。</p>
+      <div class="anime-actions">
+        <a class="anime-button primary" href="#latest-writing">开始漫游 <span>→</span></a>
+        <a class="anime-button soft" href="{{ '/archive/' | relative_url }}">翻阅归档</a>
+      </div>
+      <p class="codex-note">✦ 本站由夏鱼与 Codex 一起搭建</p>
+    </div>
 
-    <div class="opening-brand reveal">
-      <span class="eyebrow">XIAYU'S PRIVATE UNIVERSE</span>
-      <h1><span>夏鱼屋</span><small>XIAYU HOUSE</small></h1>
-      <p>在星河、云海与樱花之间，保存一个人的文字、照片、音乐和回忆。</p>
-      <div class="cinema-actions">
-        <a href="#worlds">进入世界 <b>↘</b></a>
-        <a href="{{ '/archive/' | relative_url }}" class="line-action">阅读归档</a>
+    <div class="hero-character reveal" aria-label="夏鱼的星空照片">
+      <div class="character-halo halo-one"></div>
+      <div class="character-halo halo-two"></div>
+      <div class="character-frame">
+        <img class="character-day" src="{{ '/assets/images/imported/184-img_0849.png' | relative_url }}" alt="夏鱼在樱花晴空下">
+        <img class="character-night" src="{{ '/assets/images/custom/xiayu-hero.png' | relative_url }}" alt="夏鱼在蓝色星空下">
+      </div>
+      <span class="floating-rune rune-a">✦</span>
+      <span class="floating-rune rune-b">♡</span>
+      <span class="floating-rune rune-c">₊˚</span>
+      <div class="hero-status">
+        <span class="status-dot"></span>
+        <div><small>CURRENT MOOD</small><strong>正在夜空里发呆</strong></div>
       </div>
     </div>
 
-    <aside class="opening-note reveal">
-      <span>NOW / 2026</span>
-      <strong>一间由夏鱼与 Codex<br>共同搭建的数字小屋</strong>
-    </aside>
-    <div class="opening-vertical">BLUE · WHITE · PINK / ANIME DREAMSCAPE</div>
-    <div class="cinema-scroll"><i></i><span>SCROLL TO UNFOLD</span></div>
+    <div class="hero-scroll-hint"><span></span> SCROLL TO DREAM</div>
   </section>
 
-  <section class="cinema-act world-act" id="worlds" data-cinema-act data-world-reveal>
-    <div class="world-base world-day"></div>
-    <div class="world-mask world-night" data-world-mask></div>
-    <div class="world-vignette"></div>
-    <div class="world-copy reveal">
-      <span class="eyebrow">ACT I / TWO SIDES OF THE SKY</span>
-      <h2>白昼收藏心动，<br>夜晚安放回忆。</h2>
-      <p>移动鼠标，拨开两个世界的边界。右上角的太阳与月亮，也会让整座小屋随你切换昼夜。</p>
-      <a href="#stories" class="cinema-text-link">继续向故事深处 <b>→</b></a>
-    </div>
-    <div class="world-cursor-hint" data-world-hint><span></span>移动鼠标探索</div>
+  <section class="profile-ribbon shell reveal">
+    <div class="profile-avatar"><img src="{{ '/assets/images/custom/xiayu-hero.png' | relative_url }}" alt="夏鱼头像"></div>
+    <div class="profile-intro"><span>HELLO, I'M</span><h2>夏鱼</h2><p>喜欢夜晚、二次元、照片与慢慢写下来的心情。</p></div>
+    <div class="profile-count"><strong>{{ site.posts.size }}</strong><span>篇文章</span></div>
+    <div class="profile-count"><strong>{{ gallery_images | size }}</strong><span>张摘选</span></div>
+    <div class="profile-count"><strong>∞</strong><span>未完待续</span></div>
   </section>
 
-  <section class="story-act" id="stories" data-cinema-act>
-    <header class="story-heading shell reveal">
-      <div><span class="eyebrow">ACT II / LATEST STORIES</span><h2>最近写下的故事</h2></div>
-      <p>不是信息流，而是一组写给未来的电影字幕。</p>
+  <section class="anime-section writing-scene shell" id="latest-writing">
+    <header class="anime-section-title reveal">
+      <div><p>CHAPTER / 01</p><h2>最近写下的故事</h2></div>
+      <span>把一小片今天，寄给未来的自己。</span>
     </header>
-    <div class="story-reel shell">
+
+    <div class="letter-grid">
       {% assign shown_posts = 0 %}
       {% for post in site.posts %}
         {% unless hidden_titles contains post.title %}
-          <article class="reel-item reveal">
+          <article class="letter-card reveal">
             <a class="post-link" href="{{ post.url | relative_url }}" aria-label="阅读 {{ post.title }}"></a>
-            <span class="reel-index">SCENE 0{{ shown_posts | plus: 1 }}</span>
-            <time>{{ post.date | date: '%Y · %m · %d' }}</time>
+            <div class="letter-number">0{{ shown_posts | plus: 1 }}</div>
+            <div class="letter-meta"><time>{{ post.date | date: '%Y.%m.%d' }}</time><span>{% if post.title contains '回忆录' %}PRIVATE MEMORY{% else %}XIAYU NOTE{% endif %}</span></div>
             <h3>{{ post.title }}</h3>
-            <p>{{ post.description | default: post.excerpt | strip_html | strip_newlines | default: "写给当时的自己，也写给偶然经过这里的人。" | truncate: 88 }}</p>
-            <footer><span>{% if post.title contains '回忆录' %}PRIVATE MEMORY{% else %}XIAYU NOTE{% endif %}</span><b>↗</b></footer>
+            <p>{{ post.description | default: post.excerpt | strip_html | strip_newlines | default: "写给当时的自己，也写给偶然路过这里的人。" | truncate: 88 }}</p>
+            <div class="letter-footer"><span>READ STORY</span><b>↗</b></div>
           </article>
           {% assign shown_posts = shown_posts | plus: 1 %}
           {% if shown_posts >= 6 %}{% break %}{% endif %}
@@ -67,41 +70,45 @@ title: 夏鱼屋
     </div>
   </section>
 
-  <section class="cinema-act memoir-act" id="talks" data-cinema-act>
-    <div class="memoir-image"></div>
-    <div class="memoir-overlay"></div>
-    <div class="memoir-copy shell reveal">
-      <span class="eyebrow">ACT III / PRIVATE MEMORY</span>
-      <h2>回忆不是过去，<br>是仍在发光的远方。</h2>
-      <p>这一幕会一直保留。它像小屋深处一扇暂时合上的门，留给那些不必公开，却值得认真保存的片段。</p>
-      <a href="{% for post in site.posts %}{% if post.title contains '回忆录' %}{{ post.url | relative_url }}{% break %}{% endif %}{% endfor %}" class="cinema-text-link">进入回忆录 <b>→</b></a>
+  <section class="memory-scene" id="talks">
+    <div class="memory-inner shell">
+      <div class="memory-art reveal">
+        <img src="{{ gallery_images[0] | relative_url }}" alt="夏鱼屋的回忆画面">
+        <span class="memory-stamp">SECRET<br>MEMORY</span>
+      </div>
+      <div class="memory-copy reveal">
+        <p>CHAPTER / 02</p>
+        <h2>有些回忆，<br>适合藏在星光背面。</h2>
+        <div class="pink-line"></div>
+        <p class="memory-description">回忆录会一直保留。它不是空栏目，而是小屋里一扇暂时合上的门，留给以后想认真保存的私密片段。</p>
+        <a class="text-link" href="{% for post in site.posts %}{% if post.title contains '回忆录' %}{{ post.url | relative_url }}{% break %}{% endif %}{% endfor %}">进入回忆录 <span>→</span></a>
+      </div>
     </div>
-    <div class="memoir-mark">MEMORY<br><small>PRIVATE ARCHIVE</small></div>
   </section>
 
-  <section class="gallery-act" id="photos" data-cinema-act>
-    <header class="story-heading shell reveal">
-      <div><span class="eyebrow">ACT IV / PHOTO FRAGMENTS</span><h2>星光照片簿</h2></div>
-      <p>五个停格画面，组成属于夏鱼的片尾蒙太奇。</p>
+  <section class="anime-section photo-scene shell" id="photos">
+    <header class="anime-section-title reveal">
+      <div><p>CHAPTER / 03</p><h2>星光照片簿</h2></div>
+      <span>每张照片，都是另一个世界留下的入口。</span>
     </header>
-    <div class="cinema-gallery shell">
+    <div class="polaroid-wall">
       {% for image in gallery_images %}
-        <figure class="cinema-shot reveal">
+        <figure class="polaroid reveal">
           <img src="{{ image | relative_url }}" alt="夏鱼的照片 {{ forloop.index }}">
-          <figcaption><span>FRAME / 0{{ forloop.index }}</span><i>XIAYU</i></figcaption>
+          <figcaption><span>XIAYU / 0{{ forloop.index }}</span><i>✦</i></figcaption>
         </figure>
       {% endfor %}
     </div>
   </section>
 
-  <section class="closing-act shell" id="links" data-cinema-act>
-    <div class="closing-card reveal">
-      <span class="eyebrow">THE STORY CONTINUES</span>
-      <h2>这里不是终点，<br>只是下一篇故事的入口。</h2>
-      <p>文章、照片、音乐和回忆会继续生长。慢一点，但每一页都更像夏鱼。</p>
-      <div class="cinema-actions">
-        <a href="{{ '/about/' | relative_url }}">关于夏鱼 <b>→</b></a>
-        <a href="https://github.com/{{ site.author.github }}" class="line-action">GitHub</a>
+  <section class="anime-section final-scene shell" id="links">
+    <div class="final-card reveal">
+      <p>TO BE CONTINUED...</p>
+      <h2>欢迎来到夏鱼屋</h2>
+      <span>这里会慢慢长出更多文章、音乐与故事。</span>
+      <div class="anime-actions">
+        <a class="anime-button primary" href="{{ '/about/' | relative_url }}">认识夏鱼</a>
+        <a class="anime-button soft" href="https://github.com/{{ site.author.github }}">GitHub</a>
       </div>
     </div>
   </section>

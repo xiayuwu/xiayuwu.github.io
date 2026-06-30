@@ -104,39 +104,6 @@ window.addEventListener("scroll", () => {
   });
 }, { passive: true });
 
-const worldReveal = document.querySelector("[data-world-reveal]");
-const worldMask = document.querySelector("[data-world-mask]");
-if (worldReveal && worldMask) {
-  const moveWorldLight = (clientX, clientY) => {
-    const rect = worldReveal.getBoundingClientRect();
-    const x = Math.max(0, Math.min(rect.width, clientX - rect.left));
-    const y = Math.max(0, Math.min(rect.height, clientY - rect.top));
-    worldReveal.style.setProperty("--world-x", `${x}px`);
-    worldReveal.style.setProperty("--world-y", `${y}px`);
-  };
-  worldReveal.addEventListener("pointermove", (event) => moveWorldLight(event.clientX, event.clientY), { passive: true });
-  worldReveal.addEventListener("touchmove", (event) => {
-    if (event.touches[0]) moveWorldLight(event.touches[0].clientX, event.touches[0].clientY);
-  }, { passive: true });
-}
-
-const cinemaActs = document.querySelectorAll("[data-cinema-act]");
-if (cinemaActs.length && !reducedMotion) {
-  let cinemaFrame = 0;
-  window.addEventListener("scroll", () => {
-    if (cinemaFrame) return;
-    cinemaFrame = requestAnimationFrame(() => {
-      cinemaActs.forEach((act) => {
-        const rect = act.getBoundingClientRect();
-        const centerOffset = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
-        const shift = Math.max(-1.5, Math.min(1.5, centerOffset));
-        act.style.setProperty("--act-parallax", `${shift * -18}px`);
-      });
-      cinemaFrame = 0;
-    });
-  }, { passive: true });
-}
-
 const canvas = document.querySelector("[data-cosmos]");
 if (canvas && !reducedMotion) {
   const context = canvas.getContext("2d");
