@@ -3,6 +3,25 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matc
 const compactScreen = window.matchMedia("(max-width: 680px)").matches;
 const hasVibeStage = Boolean(document.querySelector("[data-vibe-stage]"));
 if (hasVibeStage) document.body.classList.add("has-vibe-stage");
+const readingPage = Boolean(document.querySelector(".post-page"));
+if (readingPage) document.body.classList.add("is-reading-page");
+
+if (readingPage && compactScreen) {
+  const siteHeader = document.querySelector(".site-header");
+  let previousScrollY = window.scrollY;
+  let headerFrame = 0;
+  window.addEventListener("scroll", () => {
+    if (headerFrame) return;
+    headerFrame = requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > previousScrollY + 4;
+      siteHeader?.classList.toggle("is-header-hidden", scrollingDown && currentScrollY > 110);
+      if (currentScrollY < 40) siteHeader?.classList.remove("is-header-hidden");
+      previousScrollY = currentScrollY;
+      headerFrame = 0;
+    });
+  }, { passive: true });
+}
 
 const applyTheme = (theme) => {
   root.dataset.theme = theme;

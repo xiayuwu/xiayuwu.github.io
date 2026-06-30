@@ -2893,3 +2893,65 @@ body.has-vibe-stage::before {
   backface-visibility: hidden;
   will-change: opacity;
 }
+
+@media (max-width: 680px) {
+  body.is-reading-page .site-header {
+    top: 5px;
+    padding-top: 5px;
+    transition: transform .28s ease, opacity .28s ease;
+  }
+
+  body.is-reading-page .site-header.is-header-hidden {
+    opacity: 0;
+    transform: translateY(calc(-100% - 12px));
+    pointer-events: none;
+  }
+
+  body.is-reading-page .nav-shell {
+    width: calc(100% - 18px);
+    min-height: 50px;
+    max-height: 54px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 9px;
+    padding: 6px 8px;
+    border-radius: 999px;
+  }
+
+  body.is-reading-page .site-nav {
+    display: none;
+  }
+
+  body.is-reading-page .brand {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  body.is-reading-page .brand-mark {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  body.is-reading-page .brand-copy strong {
+    font-size: 13px;
+  }
+
+  body.is-reading-page .brand-copy small {
+    display: none;
+  }
+
+  body.is-reading-page .theme-toggle {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  body.is-reading-page .theme-toggle-icon {
+    font-size: 18px;
+  }
+
+  body.is-reading-page .post-page {
+    padding-top: 72px;
+  }
+}
