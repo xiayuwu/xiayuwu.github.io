@@ -2058,3 +2058,270 @@ body {
   .anime-player { grid-template-columns: 54px minmax(0,1fr) 48px; }
   .anime-player .player-cover { width: 54px; height: 54px; }
 }
+
+/* Readability-first dual anime worlds */
+:root[data-theme="light"] {
+  --page-ink: #243764;
+  --page-muted: #63769c;
+  --scene-panel: rgba(251, 254, 255, 0.82);
+  --scene-border: rgba(255, 255, 255, 0.92);
+  --nav-ink: #334a79;
+}
+
+:root:not([data-theme="light"]) {
+  --page-ink: #edf6ff;
+  --page-muted: #b8c9ea;
+  --scene-panel: rgba(10, 23, 63, 0.76);
+  --scene-border: rgba(177, 218, 255, 0.3);
+  --nav-ink: #eef7ff;
+}
+
+body {
+  color: var(--page-ink);
+  transition: color 0.65s ease, background 0.8s ease;
+}
+
+:root[data-theme="light"] body {
+  background:
+    radial-gradient(circle at 78% 9%, rgba(255, 164, 215, 0.42), transparent 25%),
+    radial-gradient(circle at 12% 18%, rgba(106, 211, 255, 0.42), transparent 28%),
+    linear-gradient(180deg, #8fdcff 0%, #dff5ff 26%, #fff8fc 52%, #e6f6ff 76%, #ffdff1 100%);
+}
+
+:root:not([data-theme="light"]) body {
+  background:
+    radial-gradient(circle at 74% 8%, rgba(255, 107, 196, 0.2), transparent 24%),
+    radial-gradient(circle at 14% 24%, rgba(62, 171, 255, 0.2), transparent 26%),
+    linear-gradient(180deg, #06133b 0%, #122965 27%, #283e82 52%, #131d4c 78%, #070e2c 100%);
+}
+
+.site-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: -5%;
+  background-position: center;
+  background-size: cover;
+  transition: opacity 0.8s ease, filter 0.8s ease, background-image 0.8s ease;
+  animation: worldPan 28s ease-in-out infinite alternate;
+}
+
+:root[data-theme="light"] .site-backdrop::before {
+  background-image: linear-gradient(180deg, rgba(123, 210, 255, 0.18), rgba(255, 244, 251, 0.5)), url("../images/imported/184-img_0849.png");
+  background-position: 72% 26%;
+  filter: blur(2px) saturate(1.08);
+  opacity: 0.22;
+}
+
+:root:not([data-theme="light"]) .site-backdrop::before {
+  background-image: linear-gradient(180deg, rgba(4, 12, 44, 0.3), rgba(5, 10, 34, 0.68)), url("../images/imported/179-vrchat_2026-05-10_13-59-43.784_4320x7680.png");
+  background-position: 50% 38%;
+  filter: saturate(1.18);
+  opacity: 0.34;
+}
+
+.petal-layer,
+.dream-cloud {
+  position: absolute;
+  inset: 0;
+}
+
+.petal-layer i {
+  position: absolute;
+  top: -8vh;
+  width: var(--petal-size);
+  height: calc(var(--petal-size) * 0.68);
+  border-radius: 80% 12% 70% 20%;
+  background: linear-gradient(135deg, #fff 0%, #ffd0e8 42%, #ff88c6 100%);
+  box-shadow: 0 0 10px rgba(255, 143, 204, 0.42);
+  opacity: 0.78;
+  animation: petalFall var(--petal-duration) linear var(--petal-delay) infinite;
+}
+
+:root:not([data-theme="light"]) .petal-layer i {
+  background: linear-gradient(135deg, #fff, #a5dfff 42%, #d68dff);
+  box-shadow: 0 0 12px rgba(112, 216, 255, 0.72);
+  opacity: 0.6;
+}
+
+.dream-cloud {
+  height: 44%;
+  top: auto;
+  bottom: -14%;
+  background:
+    radial-gradient(ellipse at 8% 70%, rgba(255,255,255,.72) 0 13%, transparent 14%),
+    radial-gradient(ellipse at 28% 64%, rgba(255,255,255,.62) 0 17%, transparent 18%),
+    radial-gradient(ellipse at 54% 78%, rgba(237,247,255,.68) 0 20%, transparent 21%),
+    radial-gradient(ellipse at 78% 62%, rgba(255,225,243,.55) 0 17%, transparent 18%),
+    radial-gradient(ellipse at 98% 76%, rgba(235,248,255,.72) 0 19%, transparent 20%);
+  filter: blur(22px);
+  animation: cloudDrift 24s ease-in-out infinite alternate;
+}
+
+.cloud-far {
+  bottom: 30%;
+  opacity: 0.25;
+  transform: scale(0.72);
+  animation-duration: 34s;
+  animation-direction: alternate-reverse;
+}
+
+:root:not([data-theme="light"]) .dream-cloud {
+  opacity: 0.15;
+  filter: blur(28px) hue-rotate(35deg);
+}
+
+.cosmos-canvas {
+  transition: opacity 0.7s ease;
+}
+
+:root[data-theme="light"] .cosmos-canvas { opacity: 0.3; }
+:root:not([data-theme="light"]) .cosmos-canvas { opacity: 0.92; }
+
+.starfield,
+.aurora,
+.moon-glow,
+.nebula {
+  transition: opacity 0.75s ease, filter 0.75s ease;
+}
+
+:root[data-theme="light"] .starfield { opacity: 0.26; }
+:root[data-theme="light"] .moon-glow { opacity: 0.16; }
+:root[data-theme="light"] .nebula { opacity: 0.2; }
+:root:not([data-theme="light"]) .starfield { opacity: 1; }
+:root:not([data-theme="light"]) .moon-glow { opacity: 0.46; }
+
+.theme-changing body::after {
+  content: "";
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at calc(100% - 68px) 55px, rgba(255,255,255,.82), rgba(143,201,255,.3) 18%, transparent 55%);
+  animation: themeFlash .72s ease-out forwards;
+}
+
+.nav-shell {
+  border-color: var(--scene-border);
+  background: var(--scene-panel);
+}
+
+.brand-copy strong,
+.site-nav a,
+.brand-copy small,
+.theme-toggle {
+  color: var(--nav-ink);
+  text-shadow: none;
+}
+
+.site-nav a:hover { color: var(--anime-pink); }
+
+.hero-sky-copy {
+  max-width: 640px;
+  padding: 34px 38px;
+  border: 1px solid var(--scene-border);
+  border-radius: 38px 38px 38px 9px;
+  color: var(--page-ink);
+  background: var(--scene-panel);
+  box-shadow: 0 30px 90px rgba(24, 58, 125, 0.2), inset 0 1px rgba(255,255,255,.7);
+  text-shadow: none;
+  backdrop-filter: blur(28px) saturate(150%);
+}
+
+:root[data-theme="light"] .hero-sky-copy h1,
+:root[data-theme="light"] .hero-sky-copy h1 em {
+  color: #263d70;
+  text-shadow: 4px 4px 0 rgba(255, 148, 207, 0.2), 0 0 28px rgba(88, 199, 255, 0.2);
+}
+
+:root:not([data-theme="light"]) .hero-sky-copy h1,
+:root:not([data-theme="light"]) .hero-sky-copy h1 em { color: #fff; }
+
+.anime-hero-lead,
+.codex-note { color: var(--page-muted); }
+.anime-kicker { color: var(--anime-pink); }
+
+:root[data-theme="light"] .anime-button.soft {
+  color: #405682;
+  border-color: rgba(67, 103, 167, .2);
+  background: rgba(255,255,255,.55);
+}
+
+.character-frame img {
+  position: absolute;
+  inset: 0;
+  transition: opacity .85s ease, transform 1.1s ease;
+}
+
+.character-day { opacity: 0; }
+.character-night { opacity: 1; }
+:root[data-theme="light"] .character-day { opacity: 1; }
+:root[data-theme="light"] .character-night { opacity: 0; }
+:root[data-theme="light"] .character-frame .character-day { object-position: 50% 38%; transform: scale(1.02); }
+
+.profile-ribbon,
+.letter-card,
+.final-card {
+  color: var(--page-ink);
+  background: var(--scene-panel);
+  border-color: var(--scene-border);
+}
+
+:root:not([data-theme="light"]) .profile-intro h2,
+:root:not([data-theme="light"]) .profile-count strong,
+:root:not([data-theme="light"]) .anime-section-title h2,
+:root:not([data-theme="light"]) .letter-card h3,
+:root:not([data-theme="light"]) .final-card h2 {
+  color: #eef6ff;
+}
+
+:root:not([data-theme="light"]) .profile-intro p,
+:root:not([data-theme="light"]) .profile-count span,
+:root:not([data-theme="light"]) .anime-section-title > span,
+:root:not([data-theme="light"]) .letter-card > p,
+:root:not([data-theme="light"]) .final-card > span {
+  color: #b8c9e8;
+}
+
+:root:not([data-theme="light"]) .letter-card {
+  background: linear-gradient(145deg, rgba(18, 37, 88, .9), rgba(27, 43, 94, .8) 65%, rgba(83, 45, 103, .78));
+  box-shadow: 0 25px 65px rgba(0, 5, 29, .34), inset 0 1px rgba(255,255,255,.08);
+}
+
+:root:not([data-theme="light"]) .final-card {
+  background: linear-gradient(135deg, rgba(15,34,80,.9), rgba(29,49,105,.83), rgba(91,48,108,.78));
+}
+
+.anime-player {
+  color: var(--page-ink);
+  background: var(--scene-panel);
+  border-color: var(--scene-border);
+}
+
+@keyframes worldPan {
+  from { transform: scale(1.05) translate3d(-1%, -1%, 0); }
+  to { transform: scale(1.12) translate3d(2%, 1.5%, 0); }
+}
+
+@keyframes petalFall {
+  0% { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
+  8% { opacity: .82; }
+  55% { transform: translate3d(var(--petal-drift), 55vh, 0) rotate(430deg); }
+  100% { transform: translate3d(var(--petal-drift-back), 112vh, 0) rotate(850deg); opacity: 0; }
+}
+
+@keyframes cloudDrift {
+  from { transform: translate3d(-6%, 0, 0) scale(1.08); }
+  to { transform: translate3d(7%, -5%, 0) scale(1.16); }
+}
+
+@keyframes themeFlash {
+  0% { opacity: 0; transform: scale(.5); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
+@media (max-width: 680px) {
+  .hero-sky-copy { padding: 24px 20px; border-radius: 28px 28px 28px 8px; }
+  .site-nav a { color: var(--nav-ink); }
+  .dream-cloud { opacity: .45; }
+}
