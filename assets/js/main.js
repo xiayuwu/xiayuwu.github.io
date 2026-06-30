@@ -1,5 +1,6 @@
 const root = document.documentElement;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const compactScreen = window.matchMedia("(max-width: 680px)").matches;
 
 const applyTheme = (theme) => {
   root.dataset.theme = theme;
@@ -11,6 +12,7 @@ applyTheme(localStorage.getItem("theme") || (window.matchMedia("(prefers-color-s
 document.querySelector(".theme-toggle")?.addEventListener("click", () => {
   root.classList.add("theme-changing");
   applyTheme(root.dataset.theme === "light" ? "dark" : "light");
+  window.dispatchEvent(new CustomEvent("xiayu:themechange"));
   window.setTimeout(() => root.classList.remove("theme-changing"), 720);
 });
 
@@ -32,7 +34,7 @@ if (reducedMotion || !("IntersectionObserver" in window)) {
 
 const fireflies = document.querySelector("[data-fireflies]");
 if (fireflies && !reducedMotion) {
-  for (let index = 0; index < 24; index += 1) {
+  for (let index = 0; index < (compactScreen ? 10 : 24); index += 1) {
     const light = document.createElement("span");
     light.style.left = `${Math.random() * 100}%`;
     light.style.top = `${Math.random() * 100}%`;
@@ -45,7 +47,7 @@ if (fireflies && !reducedMotion) {
 
 const petals = document.querySelector("[data-petals]");
 if (petals && !reducedMotion) {
-  for (let index = 0; index < 30; index += 1) {
+  for (let index = 0; index < (compactScreen ? 12 : 30); index += 1) {
     const petal = document.createElement("i");
     const drift = (Math.random() - 0.5) * 260;
     petal.style.left = `${Math.random() * 100}%`;
@@ -69,7 +71,7 @@ if (shootingStars && !reducedMotion) {
     shootingStars.appendChild(star);
     window.setTimeout(() => star.remove(), 1700);
   };
-  window.setInterval(launch, 2700);
+  window.setInterval(launch, compactScreen ? 4600 : 2700);
   window.setTimeout(launch, 500);
 }
 
@@ -120,7 +122,8 @@ if (canvas && !reducedMotion) {
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    particles = Array.from({ length: Math.min(92, Math.max(42, Math.floor(width / 17))) }, () => ({
+    const particleCount = compactScreen ? 24 : Math.min(92, Math.max(42, Math.floor(width / 17)));
+    particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width, y: Math.random() * height,
       vx: (Math.random() - 0.5) * 0.14, vy: (Math.random() - 0.5) * 0.14,
       radius: 0.6 + Math.random() * 1.6, phase: Math.random() * Math.PI * 2
@@ -289,13 +292,22 @@ if (player) {
 const ambientVideos = document.querySelectorAll(".vibe-video");
 const vibeStage = document.querySelector("[data-vibe-stage]");
 if (ambientVideos.length && vibeStage && "IntersectionObserver" in window) {
+  let stageVisible = false;
+  const syncAmbientVideos = () => {
+    const activeClass = root.dataset.theme === "light" ? "vibe-day-video" : "vibe-night-video";
+    ambientVideos.forEach((video) => {
+      const shouldPlay = stageVisible && !document.hidden && video.classList.contains(activeClass);
+      if (shouldPlay) video.play().catch(() => {});
+      else video.pause();
+    });
+  };
   const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      ambientVideos.forEach((video) => {
-        if (entry.isIntersecting) video.play().catch(() => {});
-        else video.pause();
-      });
+      stageVisible = entry.isIntersecting;
+      syncAmbientVideos();
     });
   }, { threshold: 0.18 });
   videoObserver.observe(vibeStage);
+  window.addEventListener("xiayu:themechange", syncAmbientVideos);
+  document.addEventListener("visibilitychange", syncAmbientVideos);
 }

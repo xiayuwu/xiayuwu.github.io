@@ -2745,3 +2745,112 @@ body {
   .memory-copy { padding: 25px 20px; border-radius: 28px 28px 9px 28px; }
   .polaroid { border-radius: 21px 21px 8px 21px; }
 }
+
+/* Phase 4: mobile and motion performance */
+@media (max-width: 680px) {
+  .site-header {
+    top: 6px;
+    padding-top: 6px;
+  }
+
+  .nav-shell {
+    max-height: 132px;
+    overflow: hidden;
+    padding: 9px 11px;
+    border-radius: 24px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .brand-copy strong { font-size: 14px; }
+  .brand-copy small { font-size: 8px; }
+
+  .site-nav {
+    width: 100%;
+    gap: 9px 14px;
+    padding: 0 4px 3px;
+    font-size: 11px;
+  }
+
+  .theme-toggle {
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .vibe-stage {
+    min-height: 100svh;
+  }
+
+  .vibe-motion-bg {
+    animation-duration: 26s;
+  }
+
+  .depth-b {
+    display: none;
+  }
+
+  .vibe-brand {
+    top: 172px;
+    left: 17px;
+  }
+
+  .vibe-brand strong { font-size: 30px; }
+  .vibe-brand small { max-width: 250px; font-size: 9px; }
+
+  .lyric-stage {
+    top: 48%;
+    width: calc(100% - 32px);
+  }
+
+  .lyric-stage h1 {
+    margin-block: 8px;
+    font-size: clamp(27px, 8vw, 36px);
+    line-height: 1.45;
+  }
+
+  .lyric-stage p {
+    font-size: 12px;
+  }
+
+  .vibe-enter {
+    left: 17px;
+    bottom: 98px;
+  }
+
+  .anime-player {
+    width: calc(100vw - 20px);
+    gap: 8px;
+  }
+
+  .anime-player .overline,
+  .anime-player .player-meta {
+    display: none;
+  }
+
+  .anime-player .player-body h3 {
+    overflow: hidden;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .player-progress {
+    margin-top: 7px;
+    height: 4px;
+  }
+
+  .anime-section-title h2 {
+    font-size: 34px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vibe-video { display: none; }
+  .vibe-motion-bg,
+  .letter-card,
+  .polaroid,
+  .anime-player::before { animation: none !important; }
+}
