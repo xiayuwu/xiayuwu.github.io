@@ -212,6 +212,19 @@ if (player) {
   let elapsed = 0;
   let frame = 0;
   let currentVolume = Number(localStorage.getItem("player-volume") || "0.36");
+  const lyricStage = document.querySelector("[data-lyric-stage]");
+  const lyricBefore = document.querySelector("[data-lyric-before]");
+  const lyricCurrent = document.querySelector("[data-lyric-current]");
+  const lyricAfter = document.querySelector("[data-lyric-after]");
+  const lyrics = [
+    "夜色落在云的背面",
+    "让星光替我说晚安",
+    "我们在温柔里慢慢靠岸",
+    "风把未说完的话吹向远方",
+    "这一刻只属于夏鱼屋",
+    "等下一颗流星经过窗边"
+  ];
+  let lyricIndex = 1;
   durationLabel.textContent = padTime(duration);
   volume.value = String(Math.round(currentVolume * 100));
   engine?.setVolume(currentVolume);
@@ -220,6 +233,17 @@ if (player) {
     const time = (elapsed + (performance.now() - started) / 1000) % duration;
     bar.style.width = `${time / duration * 100}%`;
     current.textContent = padTime(time);
+    const nextLyricIndex = Math.floor(time / 7) % lyrics.length;
+    if (lyricStage && nextLyricIndex !== lyricIndex) {
+      lyricIndex = nextLyricIndex;
+      lyricStage.classList.add("is-changing");
+      window.setTimeout(() => {
+        lyricBefore.textContent = lyrics[(lyricIndex - 1 + lyrics.length) % lyrics.length];
+        lyricCurrent.textContent = lyrics[lyricIndex];
+        lyricAfter.textContent = lyrics[(lyricIndex + 1) % lyrics.length];
+        lyricStage.classList.remove("is-changing");
+      }, 320);
+    }
     frame = requestAnimationFrame(render);
   };
   toggle?.addEventListener("click", async () => {
@@ -249,4 +273,16 @@ if (player) {
     localStorage.setItem("player-volume", String(currentVolume));
     engine?.setVolume(currentVolume);
   });
+}
+
+const ambientVideo = document.querySelector(".vibe-video");
+const vibeStage = document.querySelector("[data-vibe-stage]");
+if (ambientVideo && vibeStage && "IntersectionObserver" in window) {
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) ambientVideo.play().catch(() => {});
+      else ambientVideo.pause();
+    });
+  }, { threshold: 0.18 });
+  videoObserver.observe(vibeStage);
 }

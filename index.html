@@ -6,35 +6,37 @@ title: 夏鱼屋
 {% assign gallery_images = "/assets/images/imported/170-edf244a446f0ed5d880fed218e956900.png|/assets/images/imported/184-img_0849.png|/assets/images/imported/198-img_1239.jpg|/assets/images/imported/160-vrchat_2026-03-19_23-21-23.500_4320x7680.jpg|/assets/images/imported/179-vrchat_2026-05-10_13-59-43.784_4320x7680.png" | split: "|" %}
 
 <div class="anime-home">
-  <section class="anime-hero" id="home">
-    <div class="hero-sky-copy reveal">
-      <p class="anime-kicker"><span></span> XIAYU'S FANTASY LOG</p>
-      <h1><em>夏鱼</em>的<br>星光小屋</h1>
-      <p class="anime-hero-lead">在蓝色夜空与粉色云霞交界的地方，收藏文字、照片、音乐，还有那些只想悄悄留下的回忆。</p>
-      <div class="anime-actions">
-        <a class="anime-button primary" href="#latest-writing">开始漫游 <span>→</span></a>
-        <a class="anime-button soft" href="{{ '/archive/' | relative_url }}">翻阅归档</a>
-      </div>
-      <p class="codex-note">✦ 本站由夏鱼与 Codex 一起搭建</p>
+  <section class="vibe-stage" id="home" data-vibe-stage>
+    <div class="vibe-motion-bg" aria-hidden="true">
+      <div class="vibe-scene scene-day"></div>
+      <div class="vibe-scene scene-night"></div>
+      <video class="vibe-video" autoplay muted loop playsinline preload="metadata" poster="{{ '/assets/images/imported/184-img_0849.png' | relative_url }}">
+        <source src="{{ '/assets/video/dream-clouds-720.mp4' | relative_url }}" type="video/mp4">
+      </video>
+      <div class="vibe-depth depth-a"></div>
+      <div class="vibe-depth depth-b"></div>
+    </div>
+    <div class="vibe-shade" aria-hidden="true"></div>
+
+    <div class="vibe-brand reveal">
+      <span>XIAYU HOUSE</span>
+      <strong>夏鱼屋</strong>
+      <small>一间漂浮在音乐与云海之间的数字小屋</small>
     </div>
 
-    <div class="hero-character reveal" aria-label="夏鱼的星空照片">
-      <div class="character-halo halo-one"></div>
-      <div class="character-halo halo-two"></div>
-      <div class="character-frame">
-        <img class="character-day" src="{{ '/assets/images/imported/184-img_0849.png' | relative_url }}" alt="夏鱼在樱花晴空下">
-        <img class="character-night" src="{{ '/assets/images/custom/xiayu-hero.png' | relative_url }}" alt="夏鱼在蓝色星空下">
-      </div>
-      <span class="floating-rune rune-a">✦</span>
-      <span class="floating-rune rune-b">♡</span>
-      <span class="floating-rune rune-c">₊˚</span>
-      <div class="hero-status">
-        <span class="status-dot"></span>
-        <div><small>CURRENT MOOD</small><strong>正在夜空里发呆</strong></div>
-      </div>
+    <div class="lyric-stage" data-lyric-stage aria-live="polite">
+      <p class="lyric-before" data-lyric-before>夜色落在云的背面</p>
+      <h1 data-lyric-current>让星光替我说晚安</h1>
+      <p class="lyric-after" data-lyric-after>我们在温柔里慢慢靠岸</p>
     </div>
 
-    <div class="hero-scroll-hint"><span></span> SCROLL TO DREAM</div>
+    <div class="vibe-side-note reveal">
+      <span>NOW PLAYING</span>
+      <strong>Midnight Firefly</strong>
+      <small>AMBIENT / XIAYU HOUSE</small>
+    </div>
+
+    <a class="vibe-enter" href="#latest-writing"><span>进入博客</span><i>↓</i></a>
   </section>
 
   <section class="profile-ribbon shell reveal">
