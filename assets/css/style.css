@@ -2326,6 +2326,65 @@ body {
   .dream-cloud { opacity: .45; }
 }
 
+/* Hard override for cached or script-disabled mobile article pages */
+@media (max-width: 900px) {
+  body.layout-post .site-header {
+    top: 4px !important;
+    padding-top: 4px !important;
+    transition: transform .26s ease, opacity .26s ease !important;
+  }
+
+  body.layout-post .site-header.is-header-hidden {
+    opacity: 0 !important;
+    transform: translateY(-120%) !important;
+    pointer-events: none !important;
+  }
+
+  body.layout-post .nav-shell {
+    width: calc(100% - 16px) !important;
+    min-height: 48px !important;
+    max-height: 50px !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding: 5px 7px !important;
+    border-radius: 999px !important;
+  }
+
+  body.layout-post .site-nav {
+    display: none !important;
+  }
+
+  body.layout-post .brand {
+    gap: 7px !important;
+    min-width: 0 !important;
+  }
+
+  body.layout-post .brand-mark {
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+  }
+
+  body.layout-post .brand-copy strong {
+    font-size: 13px !important;
+  }
+
+  body.layout-post .brand-copy small {
+    display: none !important;
+  }
+
+  body.layout-post .theme-toggle {
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+  }
+
+  body.layout-post .post-page {
+    padding-top: 68px !important;
+  }
+}
+
 /* Vibe music hero preview */
 .vibe-stage {
   position: relative;
