@@ -3,6 +3,7 @@ const themeButton = document.querySelector(".theme-toggle");
 const themeMeta = document.querySelector('meta[name="theme-color"]');
 const fireflyLayer = document.querySelector("[data-fireflies]");
 const cursorTrailLayer = document.querySelector("[data-cursor-trail]");
+const shootingStarLayer = document.querySelector("[data-shooting-stars]");
 const player = document.querySelector("[data-player]");
 
 const applyTheme = (theme) => {
@@ -25,6 +26,54 @@ if (savedTheme) {
 themeButton?.addEventListener("click", () => {
   applyTheme(root.dataset.theme === "light" ? "dark" : "light");
 });
+
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.body.classList.add("motion-ready");
+
+const revealElements = document.querySelectorAll(".reveal");
+if (reducedMotion || !("IntersectionObserver" in window)) {
+  revealElements.forEach((element) => element.classList.add("is-visible"));
+} else {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -7%" });
+
+  revealElements.forEach((element, index) => {
+    element.style.setProperty("--reveal-delay", `${Math.min(index % 3, 2) * 80}ms`);
+    revealObserver.observe(element);
+  });
+}
+
+if (shootingStarLayer && !reducedMotion) {
+  const launchShootingStar = () => {
+    const star = document.createElement("span");
+    star.className = "shooting-star";
+    star.style.left = `${20 + Math.random() * 70}%`;
+    star.style.top = `${5 + Math.random() * 42}%`;
+    star.style.setProperty("--shoot-scale", `${0.65 + Math.random() * 0.65}`);
+    shootingStarLayer.appendChild(star);
+    window.setTimeout(() => star.remove(), 1700);
+  };
+  window.setInterval(launchShootingStar, 4200);
+  window.setTimeout(launchShootingStar, 900);
+}
+
+if (!reducedMotion) {
+  let scrollFrame = 0;
+  window.addEventListener("scroll", () => {
+    if (scrollFrame) return;
+    scrollFrame = requestAnimationFrame(() => {
+      const scrollY = Math.min(window.scrollY, 1800);
+      root.style.setProperty("--scroll-y", `${scrollY}px`);
+      root.style.setProperty("--moon-shift", `${scrollY * -0.055}px`);
+      scrollFrame = 0;
+    });
+  }, { passive: true });
+}
 
 if (fireflyLayer) {
   for (let index = 0; index < 18; index += 1) {
