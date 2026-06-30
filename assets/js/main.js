@@ -4,6 +4,8 @@ const themeMeta = document.querySelector('meta[name="theme-color"]');
 const fireflyLayer = document.querySelector("[data-fireflies]");
 const cursorTrailLayer = document.querySelector("[data-cursor-trail]");
 const shootingStarLayer = document.querySelector("[data-shooting-stars]");
+const cosmosCanvas = document.querySelector("[data-cosmos]");
+const scrollProgress = document.querySelector("[data-scroll-progress]");
 const player = document.querySelector("[data-player]");
 
 const applyTheme = (theme) => {
@@ -70,9 +72,92 @@ if (!reducedMotion) {
       const scrollY = Math.min(window.scrollY, 1800);
       root.style.setProperty("--scroll-y", `${scrollY}px`);
       root.style.setProperty("--moon-shift", `${scrollY * -0.055}px`);
+      if (scrollProgress) {
+        const maximum = document.documentElement.scrollHeight - window.innerHeight;
+        scrollProgress.style.transform = `scaleX(${maximum > 0 ? window.scrollY / maximum : 0})`;
+      }
       scrollFrame = 0;
     });
   }, { passive: true });
+}
+
+if (cosmosCanvas && !reducedMotion) {
+  const context = cosmosCanvas.getContext("2d");
+  const pointer = { x: -1000, y: -1000 };
+  let particles = [];
+  let width = 0;
+  let height = 0;
+  let pixelRatio = 1;
+
+  const resizeCosmos = () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    cosmosCanvas.width = width * pixelRatio;
+    cosmosCanvas.height = height * pixelRatio;
+    cosmosCanvas.style.width = `${width}px`;
+    cosmosCanvas.style.height = `${height}px`;
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    const count = Math.min(86, Math.max(38, Math.floor(width / 18)));
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.12,
+      vy: (Math.random() - 0.5) * 0.12,
+      radius: 0.6 + Math.random() * 1.6,
+      phase: Math.random() * Math.PI * 2
+    }));
+  };
+
+  const drawCosmos = (time) => {
+    context.clearRect(0, 0, width, height);
+    particles.forEach((particle, index) => {
+      particle.x = (particle.x + particle.vx + width) % width;
+      particle.y = (particle.y + particle.vy + height) % height;
+      const twinkle = 0.38 + Math.sin(time * 0.0018 + particle.phase) * 0.28;
+      context.beginPath();
+      context.fillStyle = `rgba(188, 226, 255, ${twinkle})`;
+      context.shadowBlur = 10;
+      context.shadowColor = "rgba(100, 205, 255, .75)";
+      context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+      context.fill();
+
+      for (let next = index + 1; next < particles.length; next += 1) {
+        const target = particles[next];
+        const dx = particle.x - target.x;
+        const dy = particle.y - target.y;
+        const distance = Math.hypot(dx, dy);
+        if (distance < 105) {
+          context.beginPath();
+          context.strokeStyle = `rgba(117, 177, 255, ${(1 - distance / 105) * 0.12})`;
+          context.lineWidth = 0.6;
+          context.moveTo(particle.x, particle.y);
+          context.lineTo(target.x, target.y);
+          context.stroke();
+        }
+      }
+
+      const pointerDistance = Math.hypot(particle.x - pointer.x, particle.y - pointer.y);
+      if (pointerDistance < 150) {
+        context.beginPath();
+        context.strokeStyle = `rgba(126, 230, 255, ${(1 - pointerDistance / 150) * 0.42})`;
+        context.lineWidth = 0.8;
+        context.moveTo(particle.x, particle.y);
+        context.lineTo(pointer.x, pointer.y);
+        context.stroke();
+      }
+    });
+    context.shadowBlur = 0;
+    requestAnimationFrame(drawCosmos);
+  };
+
+  window.addEventListener("resize", resizeCosmos, { passive: true });
+  window.addEventListener("pointermove", (event) => {
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+  }, { passive: true });
+  resizeCosmos();
+  requestAnimationFrame(drawCosmos);
 }
 
 if (fireflyLayer) {
@@ -178,7 +263,7 @@ if (player) {
   const durationLabel = player.querySelector("[data-duration-label]");
   const duration = Number(player.dataset.duration || 188);
   const audioSrc = player.dataset.audioSrc;
-  const collapseState = localStorage.getItem("player-collapsed");
+  const collapseState = "false";
   let engine = null;
   let audio = null;
   let isPlaying = false;
@@ -260,7 +345,6 @@ if (player) {
     const collapsed = !player.classList.contains("is-collapsed");
     player.classList.toggle("is-collapsed", collapsed);
     collapse.textContent = collapsed ? "+" : "−";
-    localStorage.setItem("player-collapsed", String(collapsed));
   });
 
   if (collapseState === "true") {
