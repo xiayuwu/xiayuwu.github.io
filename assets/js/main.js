@@ -206,12 +206,14 @@ if (player) {
   const current = player.querySelector("[data-current]");
   const durationLabel = player.querySelector("[data-duration-label]");
   const duration = Number(player.dataset.duration || 188);
-  const engine = createSynth();
+  const audioSrc = player.dataset.audioSrc;
+  const audio = audioSrc ? new Audio(audioSrc) : null;
+  const engine = audio ? null : createSynth();
   let playing = false;
   let started = 0;
   let elapsed = 0;
   let frame = 0;
-  let currentVolume = Number(localStorage.getItem("player-volume") || "0.36");
+  let currentVolume = Number(localStorage.getItem("player-volume-v2") || "0.62");
   const lyricStage = document.querySelector("[data-lyric-stage]");
   const lyricBefore = document.querySelector("[data-lyric-before]");
   const lyricCurrent = document.querySelector("[data-lyric-current]");
@@ -228,9 +230,13 @@ if (player) {
   durationLabel.textContent = padTime(duration);
   volume.value = String(Math.round(currentVolume * 100));
   engine?.setVolume(currentVolume);
+  if (audio) {
+    audio.loop = true;
+    audio.volume = currentVolume;
+  }
   const render = () => {
     if (!playing) return;
-    const time = (elapsed + (performance.now() - started) / 1000) % duration;
+    const time = audio ? audio.currentTime : (elapsed + (performance.now() - started) / 1000) % duration;
     bar.style.width = `${time / duration * 100}%`;
     current.textContent = padTime(time);
     const nextLyricIndex = Math.floor(time / 7) % lyrics.length;
@@ -248,15 +254,19 @@ if (player) {
   };
   toggle?.addEventListener("click", async () => {
     if (playing) {
-      engine?.stop();
-      elapsed = (elapsed + (performance.now() - started) / 1000) % duration;
+      if (audio) audio.pause();
+      else {
+        engine?.stop();
+        elapsed = (elapsed + (performance.now() - started) / 1000) % duration;
+      }
       playing = false;
       player.classList.remove("is-playing");
       icon.textContent = "▶";
       cancelAnimationFrame(frame);
       return;
     }
-    await engine?.start();
+    if (audio) await audio.play();
+    else await engine?.start();
     playing = true;
     started = performance.now();
     player.classList.add("is-playing");
@@ -270,18 +280,21 @@ if (player) {
   });
   volume?.addEventListener("input", (event) => {
     currentVolume = Number(event.target.value) / 100;
-    localStorage.setItem("player-volume", String(currentVolume));
-    engine?.setVolume(currentVolume);
+    localStorage.setItem("player-volume-v2", String(currentVolume));
+    if (audio) audio.volume = currentVolume;
+    else engine?.setVolume(currentVolume);
   });
 }
 
-const ambientVideo = document.querySelector(".vibe-video");
+const ambientVideos = document.querySelectorAll(".vibe-video");
 const vibeStage = document.querySelector("[data-vibe-stage]");
-if (ambientVideo && vibeStage && "IntersectionObserver" in window) {
+if (ambientVideos.length && vibeStage && "IntersectionObserver" in window) {
   const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) ambientVideo.play().catch(() => {});
-      else ambientVideo.pause();
+      ambientVideos.forEach((video) => {
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      });
     });
   }, { threshold: 0.18 });
   videoObserver.observe(vibeStage);

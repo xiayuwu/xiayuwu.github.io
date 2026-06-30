@@ -10,8 +10,11 @@ title: 夏鱼屋
     <div class="vibe-motion-bg" aria-hidden="true">
       <div class="vibe-scene scene-day"></div>
       <div class="vibe-scene scene-night"></div>
-      <video class="vibe-video" autoplay muted loop playsinline preload="metadata" poster="{{ '/assets/images/imported/184-img_0849.png' | relative_url }}">
+      <video class="vibe-video vibe-day-video" autoplay muted loop playsinline preload="metadata" poster="{{ '/assets/images/imported/184-img_0849.png' | relative_url }}">
         <source src="{{ '/assets/video/dream-clouds-720.mp4' | relative_url }}" type="video/mp4">
+      </video>
+      <video class="vibe-video vibe-night-video" autoplay muted loop playsinline preload="metadata" poster="{{ '/assets/images/imported/179-vrchat_2026-05-10_13-59-43.784_4320x7680.png' | relative_url }}">
+        <source src="{{ '/assets/video/shooting-stars-720.mp4' | relative_url }}" type="video/mp4">
       </video>
       <div class="vibe-depth depth-a"></div>
       <div class="vibe-depth depth-b"></div>
@@ -32,8 +35,8 @@ title: 夏鱼屋
 
     <div class="vibe-side-note reveal">
       <span>NOW PLAYING</span>
-      <strong>Midnight Firefly</strong>
-      <small>AMBIENT / XIAYU HOUSE</small>
+      <strong>Kodama Night Town</strong>
+      <small>JAPANESE AMBIENT / XIAYU HOUSE</small>
     </div>
 
     <a class="vibe-enter" href="#latest-writing"><span>进入博客</span><i>↓</i></a>
@@ -116,10 +119,10 @@ title: 夏鱼屋
   </section>
 </div>
 
-<aside class="music-player anime-player" id="music" data-player data-duration="188" data-audio-src="">
+<aside class="music-player anime-player" id="music" data-player data-duration="185" data-audio-src="{{ '/assets/audio/kodama-night-town.mp3' | relative_url }}">
   <button class="player-pin" type="button" aria-label="收起或展开音乐播放器" data-player-collapse>−</button>
   <div class="player-cover"><img src="{{ '/assets/images/custom/xiayu-hero.png' | relative_url }}" alt="音乐封面"></div>
-  <div class="player-body"><p class="overline">NOW PLAYING</p><h3>Midnight Firefly</h3><p>夏鱼屋的夜空氛围音</p><div class="player-progress"><span class="player-progress-bar" data-progress></span></div><div class="player-meta"><span data-current>00:00</span><span data-duration-label>03:08</span></div><label class="player-volume"><span>VOL</span><input type="range" min="0" max="100" value="36" data-volume></label></div>
+  <div class="player-body"><p class="overline">NOW PLAYING</p><h3>Kodama Night Town</h3><p>日式舒缓夜景轻音乐</p><div class="player-progress"><span class="player-progress-bar" data-progress></span></div><div class="player-meta"><span data-current>00:00</span><span data-duration-label>03:05</span></div><label class="player-volume"><span>VOL</span><input type="range" min="0" max="100" value="62" data-volume></label></div>
   <button class="player-toggle" type="button" aria-label="播放或暂停" data-player-toggle><span data-toggle-icon>▶</span></button>
   <span class="collapsed-player-label" aria-hidden="true">MUSIC</span>
 </aside>
