@@ -2854,3 +2854,42 @@ body {
   .polaroid,
   .anime-player::before { animation: none !important; }
 }
+
+/* Performance: the video hero replaces legacy animated backdrop layers */
+body.has-vibe-stage .cosmos-canvas,
+body.has-vibe-stage .starfield,
+body.has-vibe-stage .firefly-layer,
+body.has-vibe-stage .cursor-trail-layer,
+body.has-vibe-stage .shooting-star-layer,
+body.has-vibe-stage .petal-layer,
+body.has-vibe-stage .dream-cloud,
+body.has-vibe-stage .nebula,
+body.has-vibe-stage .aurora,
+body.has-vibe-stage .moon-glow,
+body.has-vibe-stage .grid-glow {
+  display: none !important;
+}
+
+body.has-vibe-stage::before {
+  display: none;
+}
+
+.has-vibe-stage .vibe-motion-bg {
+  animation: none;
+  transform: scale(1.015);
+}
+
+.has-vibe-stage .vibe-depth.depth-b {
+  display: none;
+}
+
+.has-vibe-stage .vibe-depth.depth-a {
+  animation-duration: 16s;
+  opacity: .48;
+}
+
+.has-vibe-stage .vibe-video {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: opacity;
+}

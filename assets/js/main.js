@@ -1,6 +1,8 @@
 const root = document.documentElement;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const compactScreen = window.matchMedia("(max-width: 680px)").matches;
+const hasVibeStage = Boolean(document.querySelector("[data-vibe-stage]"));
+if (hasVibeStage) document.body.classList.add("has-vibe-stage");
 
 const applyTheme = (theme) => {
   root.dataset.theme = theme;
@@ -33,8 +35,8 @@ if (reducedMotion || !("IntersectionObserver" in window)) {
 }
 
 const fireflies = document.querySelector("[data-fireflies]");
-if (fireflies && !reducedMotion) {
-  for (let index = 0; index < (compactScreen ? 10 : 24); index += 1) {
+if (fireflies && !reducedMotion && !hasVibeStage) {
+  for (let index = 0; index < (compactScreen ? 8 : 16); index += 1) {
     const light = document.createElement("span");
     light.style.left = `${Math.random() * 100}%`;
     light.style.top = `${Math.random() * 100}%`;
@@ -46,7 +48,7 @@ if (fireflies && !reducedMotion) {
 }
 
 const petals = document.querySelector("[data-petals]");
-if (petals && !reducedMotion) {
+if (petals && !reducedMotion && !hasVibeStage) {
   for (let index = 0; index < (compactScreen ? 12 : 30); index += 1) {
     const petal = document.createElement("i");
     const drift = (Math.random() - 0.5) * 260;
@@ -61,7 +63,7 @@ if (petals && !reducedMotion) {
 }
 
 const shootingStars = document.querySelector("[data-shooting-stars]");
-if (shootingStars && !reducedMotion) {
+if (shootingStars && !reducedMotion && !hasVibeStage) {
   const launch = () => {
     const star = document.createElement("span");
     star.className = "shooting-star";
@@ -76,7 +78,7 @@ if (shootingStars && !reducedMotion) {
 }
 
 const trail = document.querySelector("[data-cursor-trail]");
-if (trail && !reducedMotion) {
+if (trail && !reducedMotion && !hasVibeStage) {
   let blocked = false;
   window.addEventListener("pointermove", (event) => {
     if (blocked) return;
@@ -107,7 +109,7 @@ window.addEventListener("scroll", () => {
 }, { passive: true });
 
 const canvas = document.querySelector("[data-cosmos]");
-if (canvas && !reducedMotion) {
+if (canvas && !reducedMotion && !hasVibeStage) {
   const context = canvas.getContext("2d");
   const pointer = { x: -1000, y: -1000 };
   let particles = [];
